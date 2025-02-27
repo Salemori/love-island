@@ -12,8 +12,8 @@ connectDB();
 app.use(express.json());
 app.use("/api/v1/user", userRouter);
 
-const PORT = process.env.PORT;
+const port = process.env.PORT || 8080;
 
-app.listen(PORT, () => {
-    console.log(`Listening on http://localhost:${PORT}`)
+app.listen(port, () => {
+    console.log(`Listening on http://localhost:${port}`)
 });
