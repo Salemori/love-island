@@ -89,6 +89,39 @@ exports.signIn = async (req, res) =>{
     }   
 }
 
+exports.updateUser = async (req,res) => {
+    try {
+        const { id } = req.params;
+
+        const updateBody = req.body;
+
+        const user = await UserModel.findByIdAndUpdate(id, updateBody, {
+            new: true,
+            runValidators: true,
+        });
+
+        if (!user) {
+            console.log(user);
+            return res.status(404).json({
+                status: "failed",
+                message: "User not found",
+            });
+        }
+
+        res.status(200).json({
+            status: "success",
+            message: "User updated successfully",
+            //orphanage
+        });
+    } catch (error) {
+        res.json({
+            status: "failed",
+            message: error.message,
+        });
+    }
+}
+
+
 exports.getUsers = (req, res) =>{
     res.send("Retrieved all users");
 }
