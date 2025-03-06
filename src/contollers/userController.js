@@ -146,3 +146,34 @@ exports.getMatches = async (req, res) => {
             });
     }
 };
+
+exports.getUsersByHobbies = async (req, res) => {
+    try {
+        const { hobbies } = req.query;
+
+        if (!hobbies) {
+            return res.status(400).json({
+                status: "failed",
+                message: "Please provide at least one hobby",
+            });
+        }
+
+        const hobbiesArray = hobbies.split(",").map(hobby => hobby.trim());
+
+        const users = await User.find({
+            hobbies: { $in: hobbiesArray },
+            _id: { $ne: req.user.id },
+        }).select("-password");
+
+        res.status(200).json({
+            status: "success",
+            message: "Users retrieved successfully based on hobbies",
+            users,
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: "failed",
+            message: error.message,
+        });
+    }
+};

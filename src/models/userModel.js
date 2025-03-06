@@ -9,7 +9,8 @@ const userSchema = new mongoose.Schema({
     bio: { type: String, maxlength: 500 },
     location: { type: String },
     profilePicture: { type: String },
-    interests: { type: [String] },
+    // interests: { type: [String] },
+    hobbies: [{ type: String }],
     preferences: {
       genderPreference: { type: String, enum: ["Male", "Female"] },
       minAge: { type: Number, default: 18 },
